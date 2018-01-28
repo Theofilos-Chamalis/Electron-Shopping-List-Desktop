@@ -1,6 +1,6 @@
-# Electron ShoppingList Desktop App
+# Electron Shopping List Desktop App
 
-This is a cross platform shoppinglist desktop application built on electron
+Electron Shopping List is a basic shopping list cross platform desktop application built on electron that can be used as a reference to create applications on top of its structure and menu
 
 ## Screenshots
 
