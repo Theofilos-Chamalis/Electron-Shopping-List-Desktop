@@ -5,28 +5,25 @@ const url = require('url');
 // SET ENV
 process.env.NODE_ENV = 'development';
 
-const {
-  app,
-  BrowserWindow,
-  Menu,
-  ipcMain
-} = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let mainWindow;
 let addWindow;
 
 // Listen for app to be ready
-app.on('ready', function () {
+app.on('ready', function() {
   // Create new window
   mainWindow = new BrowserWindow({});
   // Load html in window
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'mainWindow.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
+  mainWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, 'mainWindow.html'),
+      protocol: 'file:',
+      slashes: true
+    })
+  );
   // Quit app when closed
-  mainWindow.on('closed', function () {
+  mainWindow.on('closed', function() {
     app.quit();
   });
 
@@ -43,19 +40,21 @@ function createAddWindow() {
     height: 200,
     title: 'Add Shopping List Item'
   });
-  addWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'addWindow.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
+  addWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, 'addWindow.html'),
+      protocol: 'file:',
+      slashes: true
+    })
+  );
   // Handle garbage collection
-  addWindow.on('close', function () {
+  addWindow.on('close', function() {
     addWindow = null;
   });
 }
 
 // Catch item:add
-ipcMain.on('item:add', function (e, item) {
+ipcMain.on('item:add', function(e, item) {
   mainWindow.webContents.send('item:add', item);
   addWindow.close();
   // Still have a reference to addWindow in memory. Need to reclaim memory (Grabage collection)
@@ -67,7 +66,8 @@ const mainMenuTemplate = [
   // Each object is a dropdown
   {
     label: 'File',
-    submenu: [{
+    submenu: [
+      {
         label: 'Add Item',
         click() {
           createAddWindow();
@@ -99,7 +99,8 @@ if (process.platform == 'darwin') {
 if (process.env.NODE_ENV !== 'production') {
   mainMenuTemplate.push({
     label: 'Developer Tools',
-    submenu: [{
+    submenu: [
+      {
         role: 'reload'
       },
       {
